@@ -97,7 +97,7 @@ export const translations: Record<Language, TranslationKeys> = {
     aiAlgorithmsDesc: 'Advanced machine learning models assess the reliability of content based on patterns found in verified and misleading information.',
     confidenceScoring: 'Confidence Scoring',
     confidenceScoringDesc: 'Each analysis includes a confidence score and detailed explanation to help you make informed judgments about the content.',
-    automatedNote: 'While TruthSeeker provides powerful analysis, it's important to remember that no automated system is perfect. Always verify information through multiple trusted sources.',
+    automatedNote: 'While TruthSeeker provides powerful analysis, it\'s important to remember that no automated system is perfect. Always verify information through multiple trusted sources.',
     aboutTitle: 'About TruthSeeker',
     aboutDesc: 'In today\'s digital landscape, misinformation spreads rapidly. TruthSeeker was developed to help people distinguish fact from fiction by providing AI-powered analysis of content they encounter online.',
     aboutDesc2: 'Our technology examines both text and images, identifying patterns common in misleading content and offering you insights to make more informed decisions about what to trust.',
