@@ -2,10 +2,12 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { Language, translations } from '@/lib/translations';
 
+type TranslationValue = string | string[];
+
 type LanguageContextType = {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: keyof typeof translations.en) => string;
+  t: (key: keyof typeof translations.en) => TranslationValue;
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -13,7 +15,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('bn'); // Default to Bengali
   
-  const t = (key: keyof typeof translations.en): string => {
+  const t = (key: keyof typeof translations.en): TranslationValue => {
     return translations[language][key];
   };
   

@@ -11,6 +11,10 @@ interface AboutProps {
 const About: React.FC<AboutProps> = ({ className }) => {
   const { t } = useLanguage();
   
+  // Cast array values to proper types
+  const aboutChecks = t('aboutChecks') as string[];
+  const whyItMattersPoints = t('whyItMattersPoints') as string[];
+  
   return (
     <section id="about" className={cn("py-16 bg-white", className)}>
       <div className="container mx-auto px-4">
@@ -25,7 +29,7 @@ const About: React.FC<AboutProps> = ({ className }) => {
             </p>
             
             <div className="space-y-3">
-              {t('aboutChecks').map((check, index) => (
+              {aboutChecks.map((check, index) => (
                 <div key={index} className="flex items-start">
                   <CheckCircleIcon className="h-5 w-5 text-truthseeker-green mt-0.5 mr-2" />
                   <p className="text-gray-700">{check}</p>
@@ -41,7 +45,7 @@ const About: React.FC<AboutProps> = ({ className }) => {
             </p>
             
             <ul className="space-y-2 text-gray-700">
-              {t('whyItMattersPoints').map((point, index) => (
+              {whyItMattersPoints.map((point, index) => (
                 <li key={index} className="flex items-center">
                   <span className="w-2 h-2 bg-truthseeker-blue rounded-full mr-2"></span>
                   {point}
