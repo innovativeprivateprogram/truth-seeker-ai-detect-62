@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { SearchIcon } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import VerificationResult, { VerificationResultProps } from './VerificationResult';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface TextAnalyzerProps {
   className?: string;
@@ -16,12 +17,13 @@ const TextAnalyzer: React.FC<TextAnalyzerProps> = ({ className }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<Omit<VerificationResultProps, 'className'> | null>(null);
   const { toast } = useToast();
+  const { t, language } = useLanguage();
 
   const handleAnalyze = async () => {
     if (!text.trim()) {
       toast({
-        title: "টেক্সট প্রয়োজন",
-        description: "বিশ্লেষণ করার জন্য কিছু টেক্সট লিখুন।",
+        title: t('contentRequired'),
+        description: t('contentRequiredDesc'),
         variant: "destructive",
       });
       return;
@@ -43,21 +45,26 @@ const TextAnalyzer: React.FC<TextAnalyzerProps> = ({ className }) => {
       
       let status: VerificationResultProps['status'] = 'reliable';
       let confidenceScore = 85;
-      let explanation = "কন্টেন্টটি তথ্যমূলক বলে মনে হচ্ছে এবং এতে সনসনীয় ভাষা ব্যবহার করা হয়নি।";
+      let explanation = language === 'bn' 
+        ? "কন্টেন্টটি তথ্যমূলক বলে মনে হচ্ছে এবং এতে সনসনীয় ভাষা ব্যবহার করা হয়নি।"
+        : "The content appears informational and does not use sensationalist language.";
       let sources = [];
       
       if (hasKeywords && (hasExclamation || hasCapsLock)) {
         status = 'misleading';
         confidenceScore = 78;
-        explanation = "টেক্সটটিতে বিভ্রান্তিকর কন্টেন্টে সাধারণ সনসনীয় ভাষার প্যাটার্ন রয়েছে, যার মধ্যে আবেগপ্রবণ শব্দ এবং অতিরিক্ত ফরম্যাটিং অন্তর্ভুক্ত।";
+        explanation = language === 'bn'
+          ? "টেক্সটটিতে বিভ্রান্তিকর কন্টেন্টে সাধারণ সনসনীয় ভাষার প্যাটার্ন রয়েছে, যার মধ্যে আবেগপ্রবণ শব্দ এবং অতিরিক্ত ফরম্যাটিং অন্তর্ভুক্ত।"
+          : "The text contains patterns of sensationalist language common in misleading content, including emotional words and excessive formatting.";
+        
         sources = [
           { 
-            name: "মিথ্যা তথ্য সনাক্তকরণ গবেষণা কেন্দ্র", 
+            name: language === 'bn' ? "মিথ্যা তথ্য সনাক্তকরণ গবেষণা কেন্দ্র" : "Misinformation Research Center", 
             url: "https://example.com/misinformation-research",
             relevance: "high" 
           },
           { 
-            name: "ফ্যাক্ট-চেকিং ডাটাবেস", 
+            name: language === 'bn' ? "ফ্যাক্ট-চেকিং ডাটাবেস" : "Fact-Checking Database", 
             url: "https://example.com/fact-checking-database", 
             relevance: "medium" 
           }
@@ -65,15 +72,18 @@ const TextAnalyzer: React.FC<TextAnalyzerProps> = ({ className }) => {
       } else if (hasKeywords || hasExclamation || hasCapsLock) {
         status = 'potentially-misleading';
         confidenceScore = 65;
-        explanation = "টেক্সটটিতে কিছু প্যাটার্ন রয়েছে যা অতিরঞ্জিত বা বিভ্রান্তিকর তথ্যের ইঙ্গিত দিতে পারে। অন্য উৎস থেকে যাচাই করুন।";
+        explanation = language === 'bn'
+          ? "টেক্সটটিতে কিছু প্যাটার্ন রয়েছে যা অতিরঞ্জিত বা বিভ্রান্তিকর তথ্যের ইঙ্গিত দিতে পারে। অন্য উৎস থেকে যাচাই করুন।"
+          : "The text contains some patterns that may indicate exaggerated or misleading information. Verify from other sources.";
+        
         sources = [
           { 
-            name: "ভাষা বিশ্লেষণ ডাটাবেস", 
+            name: language === 'bn' ? "ভাষা বিশ্লেষণ ডাটাবেস" : "Language Analysis Database", 
             url: "https://example.com/language-analysis", 
             relevance: "medium" 
           },
           { 
-            name: "সাধারণ মিথ্যা বক্তব্য সংগ্রহ", 
+            name: language === 'bn' ? "সাধারণ মিথ্যা বক্তব্য সংগ্রহ" : "Common False Claims Collection", 
             url: "https://example.com/common-false-claims", 
             relevance: "low" 
           }
@@ -81,12 +91,12 @@ const TextAnalyzer: React.FC<TextAnalyzerProps> = ({ className }) => {
       } else {
         sources = [
           { 
-            name: "বিশ্বাসযোগ্য সূত্র ডাটাবেস", 
+            name: language === 'bn' ? "বিশ্বাসযোগ্য সূত্র ডাটাবেস" : "Reliable Sources Database", 
             url: "https://example.com/reliable-sources", 
             relevance: "high" 
           },
           { 
-            name: "ফ্যাক্ট-চেকিং গাইডলাইন", 
+            name: language === 'bn' ? "ফ্যাক্ট-চেকিং গাইডলাইন" : "Fact-Checking Guidelines", 
             url: "https://example.com/fact-checking-guidelines", 
             relevance: "medium" 
           }
@@ -104,8 +114,8 @@ const TextAnalyzer: React.FC<TextAnalyzerProps> = ({ className }) => {
     } catch (error) {
       console.error('Error analyzing text:', error);
       toast({
-        title: "বিশ্লেষণ ব্যর্থ হয়েছে",
-        description: "আপনার টেক্সট বিশ্লেষণ করার সময় একটি ত্রুটি হয়েছে। আবার চেষ্টা করুন।",
+        title: t('analysisFailed'),
+        description: t('analysisFailed_desc'),
         variant: "destructive",
       });
     } finally {
@@ -116,9 +126,9 @@ const TextAnalyzer: React.FC<TextAnalyzerProps> = ({ className }) => {
   return (
     <div className={cn("w-full max-w-3xl mx-auto space-y-4", className)}>
       <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-        <h2 className="text-lg font-semibold text-truthseeker-blue mb-3">টেক্সট বিশ্লেষণ</h2>
+        <h2 className="text-lg font-semibold text-truthseeker-blue mb-3">{t('textAnalysisTitle')}</h2>
         <Textarea
-          placeholder="যে টেক্সট কন্টেন্ট যাচাই করতে চান তা পেস্ট করুন বা টাইপ করুন..."
+          placeholder={t('textPlaceholder')}
           value={text}
           onChange={(e) => setText(e.target.value)}
           className="min-h-[150px] text-gray-800"
@@ -132,12 +142,12 @@ const TextAnalyzer: React.FC<TextAnalyzerProps> = ({ className }) => {
             {isLoading ? (
               <>
                 <div className="spinner w-4 h-4 mr-2 border-2 border-white border-l-transparent"></div>
-                <span>বিশ্লেষণ করা হচ্ছে...</span>
+                <span>{t('analyzing')}</span>
               </>
             ) : (
               <>
                 <SearchIcon className="mr-2 h-4 w-4" />
-                <span>কন্টেন্ট বিশ্লেষণ করুন</span>
+                <span>{t('analyzeContentBtn')}</span>
               </>
             )}
           </Button>

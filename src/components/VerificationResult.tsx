@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AlertTriangleIcon, CheckCircleIcon, HelpCircleIcon, InfoIcon, LinkIcon, XCircleIcon } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface VerificationResultProps {
   className?: string;
@@ -31,6 +32,8 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
   imageUrl,
   sources = []
 }) => {
+  const { t } = useLanguage();
+  
   const getStatusColor = () => {
     switch (status) {
       case 'reliable':
@@ -62,14 +65,14 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
   const getStatusLabel = () => {
     switch (status) {
       case 'reliable':
-        return 'Likely Reliable';
+        return t('likelyReliable');
       case 'potentially-misleading':
-        return 'Potentially Misleading';
+        return t('potentiallyMisleading');
       case 'misleading':
-        return 'Likely Misleading';
+        return t('likelyMisleading');
       case 'unknown':
       default:
-        return 'Unknown';
+        return t('unknown');
     }
   };
 
@@ -80,11 +83,24 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
     return 'bg-gray-400';
   };
 
+  const getRelevanceLabel = (relevance: string) => {
+    switch (relevance) {
+      case 'high':
+        return t('highRelevance');
+      case 'medium':
+        return t('mediumRelevance');
+      case 'low':
+        return t('lowRelevance');
+      default:
+        return relevance;
+    }
+  };
+
   return (
     <Card className={cn("w-full max-w-3xl mx-auto fade-in", className)}>
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
-          <CardTitle className="text-xl text-truthseeker-blue">যাচাইয়ের ফলাফল</CardTitle>
+          <CardTitle className="text-xl text-truthseeker-blue">{t('verificationResult')}</CardTitle>
           <Badge className={cn("flex items-center gap-1", getStatusColor())}>
             {getStatusIcon()}
             <span>{getStatusLabel()}</span>
@@ -107,23 +123,22 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
           
           <div>
             <div className="flex justify-between mb-1">
-              <span className="text-sm font-medium text-gray-700">বিশ্বাসযোগ্যতা স্কোর</span>
+              <span className="text-sm font-medium text-gray-700">{t('reliabilityScore')}</span>
               <span className="text-sm font-medium text-gray-700">{confidenceScore}%</span>
             </div>
             <Progress value={confidenceScore} className={getProgressColor()} />
           </div>
           
           <div>
-            <h4 className="font-medium text-truthseeker-blue mb-2">বিশ্লেষণ:</h4>
+            <h4 className="font-medium text-truthseeker-blue mb-2">{t('analysis')}</h4>
             <p className="text-gray-700">{explanation}</p>
           </div>
           
-          {/* উৎস সম্পর্কিত তথ্য */}
           {sources && sources.length > 0 && (
             <div className="mt-2">
               <h4 className="font-medium text-truthseeker-blue mb-2 flex items-center">
                 <InfoIcon className="h-4 w-4 mr-1" />
-                তথ্যের উৎস:
+                {t('sources')}
               </h4>
               <div className="space-y-2">
                 {sources.map((source, index) => (
@@ -148,9 +163,7 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
                             "bg-gray-50 text-gray-700 border-gray-200"
                           )}
                         >
-                          {source.relevance === 'high' ? "উচ্চ প্রাসঙ্গিকতা" : 
-                           source.relevance === 'medium' ? "মাঝারি প্রাসঙ্গিকতা" : 
-                           "নিম্ন প্রাসঙ্গিকতা"}
+                          {getRelevanceLabel(source.relevance)}
                         </Badge>
                       </div>
                     </div>
@@ -161,8 +174,8 @@ const VerificationResult: React.FC<VerificationResultProps> = ({
           )}
           
           <div className="mt-4 text-sm text-gray-500 bg-gray-50 p-3 rounded-md">
-            <p className="font-medium text-truthseeker-lightblue mb-1">বিশেষ দ্রষ্টব্য:</p>
-            <p>এটি একটি AI-চালিত বিশ্লেষণ এবং শুধুমাত্র তথ্যমূলক উদ্দেশ্যে ব্যবহার করা উচিত। সর্বদা একাধিক বিশ্বস্ত উৎসের মাধ্যমে তথ্য যাচাই করুন।</p>
+            <p className="font-medium text-truthseeker-lightblue mb-1">{t('specialNote')}</p>
+            <p>{t('specialNoteText')}</p>
           </div>
         </div>
       </CardContent>

@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { FileTextIcon, ImageIcon } from 'lucide-react';
 import TextAnalyzer from './TextAnalyzer';
 import ImageAnalyzer from './ImageAnalyzer';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface TabContentProps {
   className?: string;
@@ -11,6 +12,7 @@ interface TabContentProps {
 
 const TabContent: React.FC<TabContentProps> = ({ className }) => {
   const [activeTab, setActiveTab] = useState<'text' | 'image'>('text');
+  const { t } = useLanguage();
 
   return (
     <div className={cn("w-full", className)}>
@@ -25,7 +27,7 @@ const TabContent: React.FC<TabContentProps> = ({ className }) => {
           onClick={() => setActiveTab('text')}
         >
           <FileTextIcon className="mr-2 h-4 w-4" />
-          টেক্সট যাচাইকরণ
+          {t('textVerification')}
         </button>
         <button
           className={cn(
@@ -37,7 +39,7 @@ const TabContent: React.FC<TabContentProps> = ({ className }) => {
           onClick={() => setActiveTab('image')}
         >
           <ImageIcon className="mr-2 h-4 w-4" />
-          ছবি যাচাইকরণ
+          {t('imageVerification')}
         </button>
       </div>
 
