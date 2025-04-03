@@ -17,7 +17,7 @@ const Index = () => {
         <section id="content-analyzer" className="py-16 px-4">
           <div className="container mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold text-center text-truthseeker-blue mb-8">
-              Analyze Content for Misinformation
+              মিথ্যা তথ্য সনাক্ত করতে কন্টেন্ট বিশ্লেষণ করুন
             </h2>
             <TabContent />
           </div>

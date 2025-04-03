@@ -25,7 +25,7 @@ const TabContent: React.FC<TabContentProps> = ({ className }) => {
           onClick={() => setActiveTab('text')}
         >
           <FileTextIcon className="mr-2 h-4 w-4" />
-          Text Verification
+          টেক্সট যাচাইকরণ
         </button>
         <button
           className={cn(
@@ -37,7 +37,7 @@ const TabContent: React.FC<TabContentProps> = ({ className }) => {
           onClick={() => setActiveTab('image')}
         >
           <ImageIcon className="mr-2 h-4 w-4" />
-          Image Verification
+          ছবি যাচাইকরণ
         </button>
       </div>
 

@@ -25,8 +25,8 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
       // Check if file is an image
       if (!file.type.match('image.*')) {
         toast({
-          title: "Invalid file type",
-          description: "Please select an image file (JPEG, PNG, etc.)",
+          title: "অবৈধ ফাইল টাইপ",
+          description: "অনুগ্রহ করে একটি ছবি ফাইল নির্বাচন করুন (JPEG, PNG, ইত্যাদি)",
           variant: "destructive",
         });
         return;
@@ -35,8 +35,8 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
       // Check file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
         toast({
-          title: "File too large",
-          description: "Please select an image smaller than 5MB",
+          title: "ফাইল খুব বড়",
+          description: "অনুগ্রহ করে 5MB এর চেয়ে ছোট একটি ছবি নির্বাচন করুন",
           variant: "destructive",
         });
         return;
@@ -60,8 +60,8 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
   const handleAnalyze = async () => {
     if (!selectedImage) {
       toast({
-        title: "Image required",
-        description: "Please upload an image to analyze.",
+        title: "ছবি প্রয়োজন",
+        description: "বিশ্লেষণ করার জন্য একটি ছবি আপলোড করুন।",
         variant: "destructive",
       });
       return;
@@ -81,19 +81,61 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
       let status: VerificationResultProps['status'];
       let confidenceScore: number;
       let explanation: string;
+      let sources = [];
       
       if (randomFactor < 0.33) {
         status = 'reliable';
         confidenceScore = 80 + Math.floor(Math.random() * 15);
-        explanation = "No signs of digital manipulation were detected in this image. The image appears to be authentic based on our analysis of metadata, pixel patterns, and common manipulation markers.";
+        explanation = "এই ছবিতে ডিজিটাল ম্যানিপুলেশনের কোন চিহ্ন সনাক্ত করা যায়নি। মেটাডাটা, পিক্সেল প্যাটার্ন এবং সাধারণ ম্যানিপুলেশন মার্কারগুলির বিশ্লেষণের ভিত্তিতে ছবিটি প্রামাণিক বলে মনে হচ্ছে।";
+        sources = [
+          { 
+            name: "ইমেজ ফরেনসিক ডাটাবেস", 
+            url: "https://example.com/image-forensics", 
+            relevance: "high" 
+          },
+          { 
+            name: "মেটাডাটা বিশ্লেষণ রিপোর্ট", 
+            url: "https://example.com/metadata-analysis", 
+            relevance: "medium" 
+          }
+        ];
       } else if (randomFactor < 0.66) {
         status = 'potentially-misleading';
         confidenceScore = 60 + Math.floor(Math.random() * 15);
-        explanation = "Some inconsistencies were detected that may indicate manipulation. The lighting and shadows show some anomalies, and there are possible signs of editing around certain areas of the image.";
+        explanation = "ম্যানিপুলেশনের ইঙ্গিত দিতে পারে এমন কিছু অসঙ্গতি সনাক্ত করা হয়েছে। আলো এবং ছায়ায় কিছু অসঙ্গতি দেখা যাচ্ছে, এবং ছবির কিছু অংশে সম্পাদনার সম্ভাব্য চিহ্ন রয়েছে।";
+        sources = [
+          { 
+            name: "ভিজ্যুয়াল ফ্যাক্ট-চেকিং টুল", 
+            url: "https://example.com/visual-fact-checking", 
+            relevance: "medium" 
+          },
+          { 
+            name: "অসঙ্গতি বিশ্লেষণ রিপোর্ট", 
+            url: "https://example.com/inconsistency-analysis", 
+            relevance: "medium" 
+          }
+        ];
       } else {
         status = 'misleading';
         confidenceScore = 70 + Math.floor(Math.random() * 15);
-        explanation = "Strong indicators of digital manipulation were detected in this image. There are clear signs of editing, including inconsistent lighting, unusual pixel patterns, and evidence of content being added or removed.";
+        explanation = "এই ছবিতে ডিজিটাল ম্যানিপুলেশনের শক্তিশালী সূচক সনাক্ত করা হয়েছে। সম্পাদনার স্পষ্ট চিহ্ন রয়েছে, যার মধ্যে অসঙ্গতিপূর্ণ আলো, অস্বাভাবিক পিক্সেল প্যাটার্ন, এবং বিষয়বস্তু যোগ বা অপসারণের প্রমাণ অন্তর্ভুক্ত।";
+        sources = [
+          { 
+            name: "ফোটো ম্যানিপুলেশন সনাক্তকরণ গবেষণা", 
+            url: "https://example.com/photo-manipulation-detection", 
+            relevance: "high" 
+          },
+          { 
+            name: "ডিজিটাল ফরেনসিক রিপোর্ট", 
+            url: "https://example.com/digital-forensics-report", 
+            relevance: "high" 
+          },
+          { 
+            name: "পিক্সেল প্যাটার্ন বিশ্লেষণ", 
+            url: "https://example.com/pixel-pattern-analysis", 
+            relevance: "medium" 
+          }
+        ];
       }
       
       setResult({
@@ -102,12 +144,13 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
         confidenceScore,
         explanation,
         imageUrl: imagePreview as string,
+        sources
       });
     } catch (error) {
       console.error('Error analyzing image:', error);
       toast({
-        title: "Analysis failed",
-        description: "There was an error analyzing your image. Please try again.",
+        title: "বিশ্লেষণ ব্যর্থ হয়েছে",
+        description: "আপনার ছবি বিশ্লেষণ করার সময় একটি ত্রুটি হয়েছে। আবার চেষ্টা করুন।",
         variant: "destructive",
       });
     } finally {
@@ -118,7 +161,7 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
   return (
     <div className={cn("w-full max-w-3xl mx-auto space-y-4", className)}>
       <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-        <h2 className="text-lg font-semibold text-truthseeker-blue mb-3">Image Analysis</h2>
+        <h2 className="text-lg font-semibold text-truthseeker-blue mb-3">ছবি বিশ্লেষণ</h2>
         
         {!imagePreview ? (
           <div 
@@ -126,8 +169,8 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
             onClick={() => fileInputRef.current?.click()}
           >
             <ImageIcon className="h-10 w-10 text-gray-400 mb-3" />
-            <p className="text-gray-600 mb-1">Click or drag and drop to upload an image</p>
-            <p className="text-xs text-gray-500">Supports: JPG, PNG, GIF (max 5MB)</p>
+            <p className="text-gray-600 mb-1">ছবি আপলোড করতে ক্লিক করুন বা টেনে আনুন</p>
+            <p className="text-xs text-gray-500">সমর্থিত: JPG, PNG, GIF (সর্বোচ্চ 5MB)</p>
             <input
               type="file"
               ref={fileInputRef}
@@ -159,12 +202,12 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
             {isLoading ? (
               <>
                 <div className="spinner w-4 h-4 mr-2 border-2 border-white border-l-transparent"></div>
-                <span>Analyzing...</span>
+                <span>বিশ্লেষণ করা হচ্ছে...</span>
               </>
             ) : (
               <>
                 <UploadIcon className="mr-2 h-4 w-4" />
-                <span>Analyze Image</span>
+                <span>ছবি বিশ্লেষণ করুন</span>
               </>
             )}
           </Button>
