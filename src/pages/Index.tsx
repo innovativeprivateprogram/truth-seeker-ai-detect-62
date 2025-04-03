@@ -6,6 +6,7 @@ import Hero from '@/components/Hero';
 import TabContent from '@/components/TabContent';
 import HowItWorks from '@/components/HowItWorks';
 import About from '@/components/About';
+import FoundersProfile from '@/components/FoundersProfile';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const Index = () => {
@@ -28,6 +29,7 @@ const Index = () => {
         
         <HowItWorks />
         <About />
+        <FoundersProfile />
       </main>
       <Footer />
     </div>
