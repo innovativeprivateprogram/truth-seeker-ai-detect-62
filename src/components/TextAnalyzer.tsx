@@ -65,7 +65,7 @@ const TextAnalyzer: React.FC<TextAnalyzerProps> = ({ className }) => {
     return (
       <div className={className}>
         <VerificationResult 
-          result={result} 
+          analysisResult={result} 
           onReset={() => setResult(null)} 
         />
       </div>

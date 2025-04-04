@@ -2,7 +2,7 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-import { LinkedIn, Github, UserRound } from 'lucide-react';
+import { Linkedin, Github, UserRound } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface FounderData {
@@ -79,7 +79,7 @@ const FoundersProfile: React.FC = () => {
                           rel="noopener noreferrer"
                           className="text-gray-600 hover:text-truthseeker-blue transition-colors"
                         >
-                          <LinkedIn className="h-5 w-5" />
+                          <Linkedin className="h-5 w-5" />
                         </a>
                       )}
                       {founder.links.github && (
