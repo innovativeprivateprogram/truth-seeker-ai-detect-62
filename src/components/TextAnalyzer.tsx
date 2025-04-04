@@ -111,7 +111,7 @@ const TextAnalyzer: React.FC<TextAnalyzerProps> = ({ className }) => {
         />
         <div className="mt-4">
           <Button onClick={() => setResult(null)} variant="outline">
-            {t('newAnalysis') || "নতুন বিশ্লেষণ"}
+            {t('newAnalysis')}
           </Button>
         </div>
       </div>

@@ -1,4 +1,3 @@
-
 export type Language = 'bn' | 'en';
 
 type TranslationKeys = {
@@ -55,6 +54,7 @@ type TranslationKeys = {
   copyright: string;
   detectMisinformation: string;
   appDesc: string;
+  newAnalysis: string; // Adding the missing translation key
 };
 
 export const translations: Record<Language, TranslationKeys> = {
@@ -121,7 +121,8 @@ export const translations: Record<Language, TranslationKeys> = {
     footerDesc2: 'Results should be used as guidance only and not as definitive truth.',
     copyright: '© 2025 TruthSeeker',
     detectMisinformation: 'Detect Misinformation with AI',
-    appDesc: 'TruthSeeker helps you identify potentially misleading content in text and images using advanced AI analysis.'
+    appDesc: 'TruthSeeker helps you identify potentially misleading content in text and images using advanced AI analysis.',
+    newAnalysis: 'New Analysis' // Adding the English translation for the new key
   },
   bn: {
     siteName: 'সত্যান্বেষী',
@@ -186,6 +187,7 @@ export const translations: Record<Language, TranslationKeys> = {
     footerDesc2: 'ফলাফলগুলি শুধুমাত্র নির্দেশিকা হিসাবে ব্যবহার করা উচিত এবং চূড়ান্ত সত্য হিসাবে নয়।',
     copyright: '© ২০২৫ সত্যান্বেষী',
     detectMisinformation: 'AI দিয়ে মিথ্যা তথ্য সনাক্ত করুন',
-    appDesc: 'সত্যান্বেষী উন্নত AI বিশ্লেষণ ব্যবহার করে টেক্সট এবং ছবিতে সম্ভাব্য বিভ্রান্তিকর কন্টেন্ট সনাক্ত করতে সাহায্য করে।'
+    appDesc: 'সত্যান্বেষী উন্নত AI বিশ্লেষণ ব্যবহার করে টেক্সট এবং ছবিতে সম্ভাব্য বিভ্রান্তিকর কন্টেন্ট সনাক্ত করতে সাহায্য করে।',
+    newAnalysis: 'নতুন বিশ্লেষণ' // Adding the Bengali translation for the new key
   }
 };
