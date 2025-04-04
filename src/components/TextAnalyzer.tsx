@@ -65,8 +65,17 @@ const TextAnalyzer: React.FC<TextAnalyzerProps> = ({ className }) => {
     return (
       <div className={className}>
         <VerificationResult 
-          analysisResult={result} 
-          onReset={() => setResult(null)} 
+          type="text"
+          status={result.sources.some(s => s.reliability === "potentially-misleading") ? "potentially-misleading" : "reliable"}
+          confidenceScore={result.score * 100}
+          explanation={result.analysis}
+          contentPreview={result.content.substring(0, 200) + (result.content.length > 200 ? '...' : '')}
+          sources={result.sources.map(s => ({
+            name: new URL(s.url).hostname.replace('www.', ''),
+            url: s.url,
+            relevance: s.relevance as 'high' | 'medium' | 'low'
+          }))}
+          onReset={() => setResult(null)}
         />
       </div>
     );
