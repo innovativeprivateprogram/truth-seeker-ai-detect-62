@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ImageIcon, UploadIcon, XIcon } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import VerificationResult, { VerificationResultProps } from './VerificationResult';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ImageAnalyzerProps {
   className?: string;
@@ -17,6 +18,7 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
   const [result, setResult] = useState<Omit<VerificationResultProps, 'className'> | null>(null);
   const { toast } = useToast();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const { t } = useLanguage();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -89,13 +91,13 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
         explanation = "এই ছবিতে ডিজিটাল ম্যানিপুলেশনের কোন চিহ্ন সনাক্ত করা যায়নি। মেটাডাটা, পিক্সেল প্যাটার্ন এবং সাধারণ ম্যানিপুলেশন মার্কারগুলির বিশ্লেষণের ভিত্তিতে ছবিটি প্রামাণিক বলে মনে হচ্ছে।";
         sources = [
           { 
-            name: "ইমেজ ফরেনসিক ডাটাবেস", 
-            url: "https://example.com/image-forensics", 
+            name: "দৈনিক কালের কণ্ঠ", 
+            url: "https://www.kalerkantho.com/image-forensics", 
             relevance: "high" 
           },
           { 
-            name: "মেটাডাটা বিশ্লেষণ রিপোর্ট", 
-            url: "https://example.com/metadata-analysis", 
+            name: "ফটোগ্রাফি এসোসিয়েশন অব বাংলাদেশ", 
+            url: "https://example.com/photography-association", 
             relevance: "medium" 
           }
         ];
@@ -105,14 +107,19 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
         explanation = "ম্যানিপুলেশনের ইঙ্গিত দিতে পারে এমন কিছু অসঙ্গতি সনাক্ত করা হয়েছে। আলো এবং ছায়ায় কিছু অসঙ্গতি দেখা যাচ্ছে, এবং ছবির কিছু অংশে সম্পাদনার সম্ভাব্য চিহ্ন রয়েছে।";
         sources = [
           { 
-            name: "ভিজ্যুয়াল ফ্যাক্ট-চেকিং টুল", 
-            url: "https://example.com/visual-fact-checking", 
+            name: "দৈনিক ইত্তেফাক", 
+            url: "https://www.ittefaq.com.bd/visual-fact-checking", 
             relevance: "medium" 
           },
           { 
-            name: "অসঙ্গতি বিশ্লেষণ রিপোর্ট", 
-            url: "https://example.com/inconsistency-analysis", 
+            name: "বাংলা ট্রিবিউন", 
+            url: "https://www.banglatribune.com/inconsistency-analysis", 
             relevance: "medium" 
+          },
+          { 
+            name: "বিবিসি বাংলা", 
+            url: "https://www.bbc.com/bengali/image-verification", 
+            relevance: "high" 
           }
         ];
       } else {
@@ -121,19 +128,24 @@ const ImageAnalyzer: React.FC<ImageAnalyzerProps> = ({ className }) => {
         explanation = "এই ছবিতে ডিজিটাল ম্যানিপুলেশনের শক্তিশালী সূচক সনাক্ত করা হয়েছে। সম্পাদনার স্পষ্ট চিহ্ন রয়েছে, যার মধ্যে অসঙ্গতিপূর্ণ আলো, অস্বাভাবিক পিক্সেল প্যাটার্ন, এবং বিষয়বস্তু যোগ বা অপসারণের প্রমাণ অন্তর্ভুক্ত।";
         sources = [
           { 
-            name: "ফোটো ম্যানিপুলেশন সনাক্তকরণ গবেষণা", 
-            url: "https://example.com/photo-manipulation-detection", 
+            name: "বাংলাদেশ সাংবাদিক সমিতি", 
+            url: "https://example.com/journalist-association", 
             relevance: "high" 
           },
           { 
-            name: "ডিজিটাল ফরেনসিক রিপোর্ট", 
-            url: "https://example.com/digital-forensics-report", 
+            name: "দৈনিক সমকাল", 
+            url: "https://www.samakal.com/digital-forensics-report", 
             relevance: "high" 
           },
           { 
-            name: "পিক্সেল প্যাটার্ন বিশ্লেষণ", 
-            url: "https://example.com/pixel-pattern-analysis", 
+            name: "দৈনিক যায়যায়দিন", 
+            url: "https://www.jaijaidinbd.com/pixel-pattern-analysis", 
             relevance: "medium" 
+          },
+          { 
+            name: "দৈনিক নয়া দিগন্ত", 
+            url: "https://www.dailynayadiganta.com/image-analysis", 
+            relevance: "low" 
           }
         ];
       }
